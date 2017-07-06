@@ -1,0 +1,74 @@
+<div class="container">
+  <h3>Resources <span class="pull-right"><a href="" ng-click="$ctrl.add()" title="New"><i class="text-success fa fa-plus-circle" aria-hidden="true"></i></a></span></h3>
+  <table class="table table-hover table-striped">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Type</th>
+        <th class="text-center">Active</th>
+        <th class="text-center">Action</th>
+      </tr>
+    </thead>
+    <tbody ng-init="$ctrl.updateResources()">
+      <tr id="{{ resource.id }}" ng-repeat="resource in $ctrl.resources">
+        <td><a href="" ng-click="$ctrl.preview(resource.id)" title="Preview">{{ resource.name }}</a></td>
+        <td>{{ resource.type }}</td>
+        <td class="text-center"><i ng-class="resource.active ? 'text-success fa fa-check-circle' : 'text-danger fa fa-times-circle'" title="{{ resource.active }}"></i></td>
+        <td class="text-center">
+          <a href="" ng-click="$ctrl.edit(resource.id)" title="Edit"><i class="text-warning fa fa-pencil" aria-hidden="true"></i></a>&nbsp;
+          <a href="" ng-click="$ctrl.delete(resource.id)" title="Delete"><i class="text-danger fa fa-trash-o" aria-hidden="true"></i></a>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <p class="text-center">Total Resources: {{ $ctrl.resources.length }}</p>
+</div>
+
+<div class="modal fade" id="detailModal" tabindex="-1" role="dialog" aria-labelledby="detailModalLabel">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="detailModalLabel">{{ $ctrl.detail.name }}</h4>
+      </div>
+      <div class="modal-body" ng-bind-html="$ctrl.detail.content"></div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" data-dismiss="modal"><i class="fa fa-times" aria-hidden="true"></i> Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editModalLabel">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="editModalLabel">Resource</h4>
+      </div>
+      <form>
+        <div class="modal-body well">
+            <div class="form-group">
+              <label for="txtName">Name</label>
+              <input type="text" class="form-control" id="txtName" ng-model="$ctrl.editResource.name">
+            </div>
+            <div class="form-group">
+              <label for="tarContent">Content Type</label>
+              <select class="form-control" id="selType" ng-options="type for type in $ctrl.resourceTypes" ng-model="$ctrl.editResource.type"></select>
+            </div>
+            <div class="form-group">
+              <label for="tarContent">Content</label>
+              <textarea class="form-control" id="tarContent" rows="5" ng-model="$ctrl.editResource.content"></textarea>
+            </div>
+            <div class="checkbox">
+              <label><input type="checkbox" ng-model="$ctrl.editResource.active"> Active</label>
+            </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal"><i class="fa fa-undo" aria-hidden="true"></i> Cancel</button>
+          <button type="button" class="btn btn-primary" ng-click="$ctrl.save()"><i class="fa fa-floppy-o" aria-hidden="true"></i> Save</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
